@@ -1,4 +1,3 @@
-HOST=$(shell uname -n)
 PWD=$(shell pwd)
 
 .PHONY: install
@@ -45,31 +44,31 @@ generated/.bash_profile: src/bash/.bash_profile
 	cp src/bash/.bash_profile generated/.bash_profile
 
 
-generated/foot/foot.ini: src/foot/foot.ini hosts/$(HOST)/colors.cfg
+generated/foot/foot.ini: src/foot/foot.ini current_theme/colors.cfg
 	mkdir -p generated/foot
-	cat hosts/$(HOST)/colors.cfg src/foot/foot.ini | sed -n -f sedpreproc/preproc.sed > generated/foot/foot.ini
+	cat current_theme/colors.cfg src/foot/foot.ini | sed -n -f sedpreproc/preproc.sed > generated/foot/foot.ini
 
-generated/fuzzel/fuzzel.ini: src/fuzzel/fuzzel.ini hosts/$(HOST)/colors.cfg
+generated/fuzzel/fuzzel.ini: src/fuzzel/fuzzel.ini current_theme/colors.cfg
 	mkdir -p generated/fuzzel
-	cat hosts/$(HOST)/colors.cfg src/fuzzel/fuzzel.ini | sed -n -f sedpreproc/preproc.sed > generated/fuzzel/fuzzel.ini
+	cat current_theme/colors.cfg src/fuzzel/fuzzel.ini | sed -n -f sedpreproc/preproc.sed > generated/fuzzel/fuzzel.ini
 
-generated/mako/config: src/mako/config hosts/$(HOST)/colors.cfg
+generated/mako/config: src/mako/config current_theme/colors.cfg
 	mkdir -p generated/mako
-	cat hosts/$(HOST)/colors.cfg src/mako/config | sed -n -f sedpreproc/preproc.sed > generated/mako/config
+	cat current_theme/colors.cfg src/mako/config | sed -n -f sedpreproc/preproc.sed > generated/mako/config
 
-generated/sway/config: src/sway/config hosts/$(HOST)/colors.cfg
+generated/sway/config: src/sway/config current_theme/colors.cfg
 	mkdir -p generated/sway
 	cp src/sway/config generated/sway/config
 
-generated/yambar/config.yml: src/yambar/config.yml hosts/$(HOST)/colors.cfg
+generated/yambar/config.yml: src/yambar/config.yml current_theme/colors.cfg
 	mkdir -p generated/yambar
-	cat hosts/$(HOST)/colors.cfg src/yambar/config.yml | sed -n -f sedpreproc/preproc.sed > generated/yambar/config.yml
+	cat current_theme/colors.cfg src/yambar/config.yml | sed -n -f sedpreproc/preproc.sed > generated/yambar/config.yml
 
-generated/zathura/zathurarc: src/zathura/zathurarc hosts/$(HOST)/colors.cfg
+generated/zathura/zathurarc: src/zathura/zathurarc current_theme/colors.cfg
 	mkdir -p generated/zathura
-	cat hosts/$(HOST)/colors.cfg src/zathura/zathurarc | sed -n -f sedpreproc/preproc.sed > generated/zathura/zathurarc
+	cat current_theme/colors.cfg src/zathura/zathurarc | sed -n -f sedpreproc/preproc.sed > generated/zathura/zathurarc
 
-generated/wallpaper.jpg: hosts/$(HOST)/wallpaper.jpg
-	cp hosts/$(HOST)/wallpaper.jpg generated/wallpaper.jpg
+generated/wallpaper.jpg: current_theme/wallpaper.jpg
+	cp current_theme/wallpaper.jpg generated/wallpaper.jpg
 
 
