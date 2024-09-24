@@ -1,0 +1,149 @@
+set $mod Mod4
+#set $mod Mod1
+
+set $term foot
+set $menu fuzzel --no-exit-on-keyboard-focus-loss
+set $bar yambar
+set $wallpaper_daemon swaybg -i ~/.config/wallpaper.jpg
+set $notification_daemon mako
+set $media_daemon playerctl daemon
+
+output DP-2 mode 2560x1440@170Hz position 0,0
+
+default_border none
+default_floating_border none
+
+floating_modifier $mod
+
+#input "2362:9520:PixArt_Gaming_Mouse" {
+#	accel_profile "adaptive"
+#}
+
+exec $bar
+exec $notification_daemon
+exec $wallpaper_daemon
+exec $media_daemon
+
+# Screen sharing shit
+exec /usr/lib/xdg-desktop-portal -r 
+exec /usr/lib/xdg-desktop-portal-wlr
+
+smart_gaps on
+gaps inner 6
+gaps outer -5
+
+bindsym $mod+Ctrl+Shift+r reload
+bindsym $mod+Ctrl+Shift+q exit
+
+bindsym --no-repeat $mod+Return exec $term
+bindsym $mod+p exec grim -t png -g "$(slurp -d)" - | wl-copy
+
+# quit, ALT+F4
+bindsym --no-repeat {
+	$mod+q kill
+	Mod1+F4 kill
+}
+
+# Run
+bindsym --no-repeat $mod+r exec $menu
+
+bindsym {
+	XF86AudioRaiseVolume exec --no-startup-id wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+	XF86AudioLowerVolume exec --no-startup-id  wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+	XF86AudioMute exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+
+	XF86AudioPlay exec playerctl play-pause
+	XF86AudioPause exec playerctl play-pause
+
+	XF86AudioNext exec playerctl next
+	XF86AudioPrev exec playerctl previous
+	XF86AudioStop exec playerctl stop
+
+#	XF86Explorer exec
+#	XF86Search exec
+#	XF86Tools exec
+#	XF86Calculator exec
+	
+}
+
+
+bindsym --no-repeat {
+	$mod+1 workspace number 1
+	$mod+2 workspace number 2
+	$mod+3 workspace number 3
+	$mod+4 workspace number 4
+	$mod+5 workspace number 5
+	$mod+6 workspace number 6
+	$mod+7 workspace number 7
+	$mod+8 workspace number 8
+	$mod+9 workspace number 9
+	$mod+0 workspace number 10
+}
+
+bindsym --no-repeat {
+	$mod+Shift+1 move container to workspace number 1
+	$mod+Shift+2 move container to workspace number 2
+	$mod+Shift+3 move container to workspace number 3
+	$mod+Shift+4 move container to workspace number 4
+	$mod+Shift+5 move container to workspace number 5
+	$mod+Shift+6 move container to workspace number 6
+	$mod+Shift+7 move container to workspace number 7
+	$mod+Shift+8 move container to workspace number 8
+	$mod+Shift+9 move container to workspace number 9
+	$mod+Shift+0 move container to workspace number 10
+}
+
+bindsym $mod+w mode "Window Management"
+bindsym $mod+a mode "Language"
+bindsym $mod+Shift+r mode "Launch"
+bindsym $mod+s mode "Settings
+
+mode "Window Management" {
+	bindsym --no-repeat {
+		q kill; mode "default"
+		Shift+f fullscreen toggle; mode "default"
+		f floating toggle; mode "default"
+		Escape mode "default"
+		Return mode "default"
+	}
+}
+
+
+mode "Settings" {
+	bindsym --no-repeat {
+		l input type:pointer left_handed enabled; mode "default"
+		r input type:pointer left_handed disabled; mode "default"
+		Escape mode "default"
+		Return mode "default"
+	}
+}
+
+mode "Handedness" {
+	bindsym --no-repeat {
+		l input type:pointer left_handed enabled; mode "default"
+		r input type:pointer left_handed disabled; mode "default"
+		Escape mode "Settings"
+		Return mode "Settings"
+	}
+}
+
+mode "Language" {
+	bindsym --no-repeat {
+		m exec swaymsg input type:keyboard xkb_layout hu\(qwerty\); mode "default"
+		e exec swaymsg input type:keyboard xkb_layout us; mode "default"
+		d exec swaymsg input type:keyboard xkb_layout de; mode "default"
+		r exec swaymsg input type:keyboard xkb_layout ro\(std\); mode "default"
+		Escape mode "default"
+		Return mode "default"
+	}
+}
+
+# Run mode
+mode "Launch" {
+	bindsym --no-repeat {
+		f exec firefox; mode "default"
+		t exec $term; mode "default"
+		Escape mode "default"
+		Return mode "default"
+	}
+}

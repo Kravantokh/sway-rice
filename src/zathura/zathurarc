@@ -1,0 +1,6 @@
+#set font "JetBrains Mono 9"
+
+set recolor "true"
+set default-bg rgba(0,0,0,$bg_alpha_decimal)
+set recolor-lightcolor rgba(0,0,0,0)
+set adjust-open "width"

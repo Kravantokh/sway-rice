@@ -1,0 +1,210 @@
+bar_bg: &bar_bg $bg$bg_alpha
+bar_fg: &bar_fg $fg$fg_alpha
+
+active_fg: &active_fg $bright_fg$bright_fg_alpha
+active_bg: &active_bg $bright_bg$bright_bg_alpha
+active_border: &active_border $bright_fg$bright_fg_alpha
+
+default_fg: &default_fg $dark_fg$dark_fg_alpha
+default_bg: &default_bg $dark_bg$dark_bg_alpha
+default_border: &default_border $color_turned_off$color_turned_off_alpha
+audio_muted: &audio_muted $color_turned_off$color_turned_off_alpha
+
+bar:
+  location: top
+  layer: bottom
+  height: 32 
+  spacing: 0
+  margin: 4
+  foreground: *bar_fg
+  background: *bar_bg
+  border:
+     width: 0
+     color: ffffffff
+     margin: 0
+     left-margin: 0
+     right-margin: 0
+  left:
+    - label:
+        content:
+          string:
+            left-margin: 5
+            right-margin: 10
+            text: "❖"
+            on-click:
+              left: swaymsg exec "fuzzel --no-exit-on-keyboard-focus-loss"
+    - clock:
+        time-format: "%l:%M %p"
+        content:
+          list:
+            items:
+              - string:
+                  text: "{time}"
+                  right-margin: 15
+    - i3:
+        persistent:
+          - "1"
+          - "2"
+          - "3"
+          - "4"
+          - "5"
+          - "6"
+          - "7"
+          - "8"
+          - "9"
+        content:
+          "":
+            map:
+              default:
+                string:
+                  on-click:
+                    left: swaymsg workspace number {name}
+                    right: swaymsg move container to workspace number {name}
+                  text: " {name} "
+                  font: Monospace
+                  foreground: *default_fg
+                  deco:
+                    stack:
+                    - background:
+                        color: *default_bg
+                    - border:
+                        size: 1 
+                        color: *default_border
+              conditions:
+                empty:
+                  string:
+                    on-click:
+                      left: swaymsg workspace number {name}
+                      right: swaymsg move container to workspace number {name}
+                    text: " {name} "
+                    font: Monospace
+                    foreground: *default_fg
+                    deco:
+                      stack:
+                      - background:
+                          color: *bar_bg
+                      - border:
+                          size: 1 
+                          color: *default_border
+                state == focused:
+                  string:
+                    on-click:
+                      left: swaymsg workspace number {name}
+                    text: " {name} "
+                    font: Monospace:bold
+                    foreground: *active_fg
+                    deco:
+                      stack:
+                      - background:
+                          color: *active_bg
+                      - border:
+                          size: 1 
+                          color: *active_border
+                state == urgent:
+                  string:
+                    text: " {name} "
+                    on-click:
+                      left: swaymsg workspace number {name}
+                      right: swaymsg move container to workspace number {name}
+                    font: Monospace
+                    foreground: *active_fg
+                    deco:
+                      stack:
+                      - background:
+                          color: *active_bg
+                      - border:
+                          size: 1 
+                          color: *default_border
+  right:
+    - pipewire:
+        content:
+          map:
+            conditions:
+              type == "sink":
+                map:
+                  conditions:
+                    ~muted:
+                      ramp:
+                        tag: linear_volume
+                        items:
+                          - string:
+                              right-margin: 5
+                              text: "🔈{linear_volume}%"
+                              on-click:
+                                wheel-up: wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+                                wheel-down: wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+                                middle: wpctl set-volume @DEFAULT_AUDIO_SINK@ 100%
+                                left: wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+                          - string:
+                              right-margin: 5
+                              text: "🔉{linear_volume}%"
+                              on-click:
+                                wheel-up: wpctl set-empty   volume @DEFAULT_AUDIO_SINK@ 5%+
+                                wheel-down: wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+                                middle: wpctl set-volume @DEFAULT_AUDIO_SINK@ 100%
+                                left: wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+                          - string:
+                              right-margin: 5
+                              text: "🔊{linear_volume}%"
+                              on-click:
+                                wheel-up: wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+                                wheel-down: wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+                                middle: wpctl set-volume @DEFAULT_AUDIO_SINK@ 100%
+                                left: wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+                    muted:
+                      ramp:
+                        tag: linear_volume
+                        items:
+                          - string:
+                              right-margin: 5
+                              text: "🔈{linear_volume}%"
+                              foreground: *audio_muted
+                              on-click:
+                                wheel-up: wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+                                wheel-down: wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+                                middle: wpctl set-volume @DEFAULT_AUDIO_SINK@ 100%
+                                left: wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+                          - string:
+                              right-margin: 5
+                              text: "🔉{linear_volume}%"
+                              foreground: *audio_muted
+                              on-click:
+                                wheel-up: wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+                                wheel-down: wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+                                middle: wpctl set-volume @DEFAULT_AUDIO_SINK@ 100%
+                                left: wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+                          - string:
+                              right-margin: 5
+                              text: "🔊{linear_volume}%"
+                              foreground: *audio_muted
+                              on-click:
+                                wheel-up: wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+                                wheel-down: wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+                                middle: wpctl set-volume @DEFAULT_AUDIO_SINK@ 100%
+                                left: wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+              type == "source":
+                map:
+                  conditions:
+                    ~muted:
+                      list:
+                        items:
+                          - string:
+                              right-margin: 5
+                              text: "🎙{linear_volume}%"
+                              on-click:
+                                wheel-up: wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+
+                                wheel-down: wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-
+                                left: wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+                                middle: wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 100%
+                    muted:
+                      list:
+                        items:
+                          - string:
+                              right-margin: 5
+                              text: "🎙{linear_volume}%"
+                              foreground: *audio_muted
+                              on-click:
+                                wheel-up: wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+
+                                wheel-down: wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-
+                                left: wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+

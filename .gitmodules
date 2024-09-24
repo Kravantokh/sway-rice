@@ -1,0 +1,3 @@
+[submodule "sedpreproc"]
+	path = sedpreproc
+	url = https://github.com/Kravantokh/sedpreproc
