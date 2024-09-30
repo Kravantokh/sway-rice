@@ -116,6 +116,7 @@ bar:
                           size: 1 
                           color: *default_border
   right:
+#Battery_injection_point
     - pipewire:
         content:
           map:
