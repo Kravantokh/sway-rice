@@ -67,9 +67,9 @@ bar:
                     stack:
                     - background:
                         color: *default_bg
-                    - border:
-                        size: 1 
-                        color: *default_border
+                    #- border:
+                    #    size: 1 
+                    #    color: *default_border
               conditions:
                 empty:
                   string:
@@ -83,9 +83,9 @@ bar:
                       stack:
                       - background:
                           color: *bar_bg
-                      - border:
-                          size: 1 
-                          color: *default_border
+                      #- border:
+                      #    size: 1 
+                      #    color: *default_border
                 state == focused:
                   string:
                     on-click:
@@ -97,9 +97,9 @@ bar:
                       stack:
                       - background:
                           color: *active_bg
-                      - border:
-                          size: 1 
-                          color: *active_border
+                      #- border:
+                      #    size: 1 
+                      #    color: *active_border
                 state == urgent:
                   string:
                     text: " {name} "
@@ -112,9 +112,9 @@ bar:
                       stack:
                       - background:
                           color: *active_bg
-                      - border:
-                          size: 1 
-                          color: *default_border
+                      #- border:
+                      #    size: 1 
+                      #    color: *default_border
   right:
 #Battery_injection_point
     - pipewire:
