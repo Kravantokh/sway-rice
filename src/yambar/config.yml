@@ -140,7 +140,7 @@ bar:
                               right-margin: 5
                               text: "🔉{linear_volume}%"
                               on-click:
-                                wheel-up: wpctl set-empty   volume @DEFAULT_AUDIO_SINK@ 5%+
+                                wheel-up: wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
                                 wheel-down: wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
                                 middle: wpctl set-volume @DEFAULT_AUDIO_SINK@ 100%
                                 left: wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
